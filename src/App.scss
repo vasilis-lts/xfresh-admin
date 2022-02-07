@@ -1,0 +1,37 @@
+@import 'styles/_colors.scss';
+
+@font-face {
+  font-family: 'futura-medium';
+  src: local('futura-medium'), url("./assets/fonts/futura-medium.woff") format('woff');
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+*{
+  font-family: 'futura-medium', sans-serif!important;
+  box-sizing: border-box;
+}
+
+html,body {
+  -webkit-font-smoothing: antialiased;
+  -ms-font-smoothing: antialiased;
+  height: 100%; margin: 0px; padding: 0px; 
+  overflow-x: hidden;
+}
+
+
+ //////////////////// 
+ // COMPONENTS
+ ////////////////////
+
+ #leftDrawer{
+   
+   .MuiPaper-root{
+     background-color: $teal_dark;
+    }
+    svg, span{
+      color: white;
+    }
+   
+ }
