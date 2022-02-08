@@ -6,6 +6,8 @@ import List from '@mui/material/List';
 import CssBaseline from '@mui/material/CssBaseline';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
 
 import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
@@ -18,6 +20,13 @@ import { ReactComponent as CalendarIcon } from '../assets/icons/calendar.svg';
 import { ReactComponent as ExceptionIcon } from '../assets/icons/exception.svg';
 import { ReactComponent as NotificationIcon } from '../assets/icons/notification.svg';
 import { ReactComponent as MessageIcon } from '../assets/icons/message.svg';
+import { ReactComponent as UpicIcon } from '../assets/icons/upic.svg';
+import { ReactComponent as SettingsIcon } from '../assets/icons/settings.svg';
+
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import AddIcon from '@mui/icons-material/Add';
+import { Button } from '@mui/material';
+import Orders from './Orders';
 
 const drawerWidth = 196;
 
@@ -48,11 +57,53 @@ const DrawerHeader = styled('div')(({ theme }) => ({
   alignItems: 'center',
   justifyContent: 'flex-start',
   marginBottom: 30,
+  marginTop: 5,
   padding: theme.spacing(0, 2.5),
   // necessary for content to be below app bar
   ...theme.mixins.toolbar,
   '& svg': {
     marginLeft: 5
+  },
+
+}));
+
+const MainContent = styled('div')(({ theme }) => ({
+  display: 'flex',
+  flexDirection: "column",
+  padding: 20,
+  width: "100%",
+  paddingTop: 25,
+
+  '& .notification-container': {
+    margin: "0 15px",
+    position: "relative"
+  },
+  '& .notification-container svg': {
+    color: "#B0BEC5",
+    width: 18,
+    height: 18
+  },
+  '& .notification-counter': {
+    position: "absolute",
+    bottom: 4,
+    left: -10,
+    fontSize: 10,
+    borderRadius: "50%",
+    border: "1px solid #FF7024",
+    color: "#FF7024",
+    padding: "0 4px",
+    backgroundColor: "#fff"
+  },
+  '& .account-container': {
+    display: "flex", alignItems: "center", margin: "0 20px"
+  },
+  '& .account-username': {
+    fontSize: 16,
+    color: "#0A3450"
+  },
+  '& .account-occupation': {
+    fontSize: 13,
+    color: "#B4BED1"
   }
 }));
 
@@ -91,9 +142,47 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   }),
 );
 
+interface TabPanelProps {
+  children?: React.ReactNode;
+  index: number;
+  value: number;
+}
+
+function a11yProps(index: number) {
+  return {
+    id: `simple-tab-${index}`,
+    'aria-controls': `simple-tabpanel-${index}`,
+  };
+}
+
+function TabPanel(props: TabPanelProps) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box sx={{ p: 3 }}>
+          <Typography>{children}</Typography>
+        </Box>
+      )}
+    </div>
+  );
+}
+
 export default function SidebarLayout() {
   // const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+  const [value, setValue] = React.useState(0);
+
+  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+    setValue(newValue);
+  };
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -171,35 +260,77 @@ export default function SidebarLayout() {
         </List>
 
       </Drawer>
-      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-        <Typography paragraph>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-          tempor incididunt ut labore et dolore magna aliqua. Rhoncus dolor purus non
-          enim praesent elementum facilisis leo vel. Risus at ultrices mi tempus
-          imperdiet. Semper risus in hendrerit gravida rutrum quisque non tellus.
-          Convallis convallis tellus id interdum velit laoreet id donec ultrices.
-          Odio morbi quis commodo odio aenean sed adipiscing. Amet nisl suscipit
-          adipiscing bibendum est ultricies integer quis. Cursus euismod quis viverra
-          nibh cras. Metus vulputate eu scelerisque felis imperdiet proin fermentum
-          leo. Mauris commodo quis imperdiet massa tincidunt. Cras tincidunt lobortis
-          feugiat vivamus at augue. At augue eget arcu dictum varius duis at
-          consectetur lorem. Velit sed ullamcorper morbi tincidunt. Lorem donec massa
-          sapien faucibus et molestie ac.
-        </Typography>
-        <Typography paragraph>
-          Consequat mauris nunc congue nisi vitae suscipit. Fringilla est ullamcorper
-          eget nulla facilisi etiam dignissim diam. Pulvinar elementum integer enim
-          neque volutpat ac tincidunt. Ornare suspendisse sed nisi lacus sed viverra
-          tellus. Purus sit amet volutpat consequat mauris. Elementum eu facilisis
-          sed odio morbi. Euismod lacinia at quis risus sed vulputate odio. Morbi
-          tincidunt ornare massa eget egestas purus viverra accumsan in. In hendrerit
-          gravida rutrum quisque non tellus orci ac. Pellentesque nec nam aliquam sem
-          et tortor. Habitant morbi tristique senectus et. Adipiscing elit duis
-          tristique sollicitudin nibh sit. Ornare aenean euismod elementum nisi quis
-          eleifend. Commodo viverra maecenas accumsan lacus vel facilisis. Nulla
-          posuere sollicitudin aliquam ultrices sagittis orci a.
-        </Typography>
-      </Box>
+      <MainContent>
+        <Box id="mainContentHeader" sx={{ display: 'flex', justifyContent: "space-between" }}>
+          <Box sx={{ display: 'flex' }}>
+            <Typography variant='h5' className='text-primary-color'>
+              Hello John!
+            </Typography>
+            <Typography variant='h6' className='text-primary-color' style={{ marginLeft: 20, marginTop: 5, fontSize: 16 }}>
+              You have <b>3 notifications</b> and <b>1 message</b> waiting for you
+            </Typography>
+          </Box>
+          <Box sx={{ display: 'flex', alignItems: "center" }} className="sales-header-right">
+            <div className="notification-container">
+              <NotificationIcon />
+              <div className="notification-counter">3</div>
+            </div>
+            <div className="notification-container">
+              <MessageIcon />
+              <div className="notification-counter">1</div>
+            </div>
+            <div className="account-container">
+              <UpicIcon style={{ marginRight: 2 }} />
+              <div className="flex-col">
+                <div className="account-username">John Doe</div>
+                <div className="account-occupation">Supply Manager</div>
+              </div>
+              <ArrowDropDownIcon />
+            </div>
+          </Box>
+        </Box>
+        <Box id="mainContentBody" className="flex-col" style={{ marginTop: 40, padding: "0 10px" }} >
+
+          <Box sx={{ display: 'flex', justifyContent: "space-between" }}>
+
+            <Box sx={{ display: 'flex', alignItems: "center" }}>
+              <Typography variant='h4' className='text-primary-color'>Sales</Typography>
+              <SettingsIcon style={{ marginLeft: 10, marginTop: 3, color: "#37474F" }} />
+            </Box>
+
+            <Box>
+              <Button variant='contained' size='large' style={{ fontSize: 18 }}><AddIcon /> New order</Button>
+            </Box>
+
+          </Box>
+
+          <Box sx={{ width: '100%', marginTop: 5 }}>
+            <Box>
+              <Tabs
+                value={value}
+                onChange={handleChange}
+                aria-label="basic tabs"
+                TabIndicatorProps={{
+                  style: {
+                    backgroundColor: "#3FC2D4"
+                  }
+                }}
+              >
+                <Tab label="Orders" {...a11yProps(0)} />
+                <Tab label="Products" {...a11yProps(1)} />
+              </Tabs>
+            </Box>
+            <TabPanel value={value} index={0}>
+              <Orders />
+            </TabPanel>
+            <TabPanel value={value} index={1}>
+              Item Two
+            </TabPanel>
+
+          </Box>
+
+        </Box>
+      </MainContent>
     </Box>
   );
 }
