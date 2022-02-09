@@ -27,8 +27,20 @@ html,body {
 h5{font-size: 24px;}
 
 .flex{display: flex;}
+.flex-center-x{display: flex;justify-content: center;}
+.flex-center-y{display: flex;align-items: center;}
+.flex-center-xy{display: flex;align-items: center;justify-content: center;}
+.flex-jcsb{display: flex;justify-content: space-between;}
 .flex-col{display: flex;flex-direction: column;}
+.flex-reverse{display: flex;flex-direction: row-reverse;}
+.flex1{flex: 1;}
+
+
+.jcsb{justify-content: space-between;}
+
 .text-primary-color{color:#37474F}
+
+.w100{width: 100%;}
 
  ////////////////////////// 
  // COMPONENTS / overrides
@@ -74,4 +86,9 @@ h5{font-size: 24px;}
 }
 .MuiSelect-select.MuiSelect-outlined::after{
  border-color: #fff;
+}
+
+// menu item
+.MuiList-root svg{
+  margin-right: 5px;
 }

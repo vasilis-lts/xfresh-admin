@@ -324,7 +324,7 @@ export default function SidebarLayout() {
               <Orders />
             </TabPanel>
             <TabPanel value={value} index={1}>
-              Item Two
+              Products (under development)
             </TabPanel>
 
           </Box>
