@@ -26,6 +26,8 @@ html,body {
 
 h5{font-size: 24px;}
 
+.bold{font-weight: bold;}
+
 .flex{display: flex;}
 .flex-center-x{display: flex;justify-content: center;}
 .flex-center-y{display: flex;align-items: center;}
@@ -92,3 +94,17 @@ h5{font-size: 24px;}
 .MuiList-root svg{
   margin-right: 5px;
 }
+
+
+// Dots
+
+.dot{
+  width: 16px;
+  height: 16px;  
+  border-radius: 50%;
+  margin: 0 auto;
+}
+
+.success-dot{background-color: $success_color;}
+.warning-dot{background-color: $warning_color;}
+.error-dot{background-color: $error_color;}

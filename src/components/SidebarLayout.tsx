@@ -95,7 +95,7 @@ const MainContent = styled('div')(({ theme }) => ({
     backgroundColor: "#fff"
   },
   '& .account-container': {
-    display: "flex", alignItems: "center", margin: "0 20px"
+    display: "flex", alignItems: "center", margin: "0 10px 0 20px"
   },
   '& .account-username': {
     fontSize: 16,

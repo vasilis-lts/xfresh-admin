@@ -16,16 +16,16 @@ const theme = createTheme({
   // typography: {
   //   fontFamily: 'geomanist-regular, Arial',
   // },
-  // palette: {
-  //   success: {
-  //     main: "#46ad48",
-  //     contrastText: "#fff"
-  //   },
-  //   warning: {
-  //     main: "#e05556",
-  //     contrastText: "#fff"
-  //   },
-  // }
+  palette: {
+    error: {
+      main: "#FF0064",
+      contrastText: "#fff"
+    },
+    warning: {
+      main: "#FBC02D",
+      contrastText: "#fff"
+    },
+  }
 });
 
 function App() {
