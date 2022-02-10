@@ -1,13 +1,17 @@
 import React from "react";
 import styled from "@emotion/styled";
-import { Box, Button, MenuItem, Select, Typography } from "@mui/material";
-import { outlinedInputClasses } from "@mui/material/OutlinedInput";
+import { Box, Button, Drawer, MenuItem, Select, Typography } from "@mui/material";
 import { ReactComponent as CalendarIcon } from '../assets/icons/calendar.svg';
 import { ReactComponent as UserIcon } from '../assets/icons/user.svg';
 import { ReactComponent as ResetIcon } from '../assets/icons/reset.svg';
-import MainTable from "./MainTable";
+import CloseIcon from '@mui/icons-material/Close';
 
-export default function Orders() {
+import MainTable from "./MainTable";
+import Dform from "./DForm";
+
+export default function Orders({ formOpen, setFormOpen }) {
+
+
 
   const OrdersContainer = styled('div')(({ theme }) => ({
 
@@ -36,18 +40,6 @@ export default function Orders() {
     },
 
   }));
-
-  const StyledSelect = styled(Select)(`
-  & .${outlinedInputClasses.notchedOutline} {
-    border-color: transparent;
-  }
-  &:hover .${outlinedInputClasses.notchedOutline} {
-    border-color: transparent;
-  }
-  &.${outlinedInputClasses.focused} .${outlinedInputClasses.notchedOutline} {
-    border-color: transparent;
-  }
-`);
 
   const columns = React.useMemo(
     () => [
@@ -111,8 +103,15 @@ export default function Orders() {
 
           let dotValue = '';
           switch (row.original.StockLevel) {
-            case 'stock_green':
+
+            case 'stock_success':
               dotValue = 'success'
+              break;
+            case 'stock_warning':
+              dotValue = 'warning'
+              break;
+            case 'stock_error':
+              dotValue = 'error'
               break;
 
             default: dotValue = 'white'
@@ -126,18 +125,108 @@ export default function Orders() {
         Header: 'Grower forecast',
         accessor: 'GrowerForecast',
         Cell: ({ row }) => {
-          return <div className="table-cell">{row.original.GrowerForecast}</div>
+          let dotValue = '';
+          switch (row.original.GrowerForecast) {
+
+            case 'forecast_success':
+              dotValue = 'success'
+              break;
+            case 'forecast_warning':
+              dotValue = 'warning'
+              break;
+            case 'forecast_error':
+              dotValue = 'error'
+              break;
+
+            default: dotValue = 'white'
+              break;
+          }
+
+          return <div className="table-cell"><div className={`${dotValue}-dot dot`} /></div>
         }
       },
-
+      {
+        Header: 'Quantity confirmed',
+        accessor: 'QuantityConfirmed',
+        Cell: ({ row }) => {
+          return <div className="table-cell">{row.original.QuantityConfirmed}</div>
+        }
+      },
+      {
+        Header: 'Status',
+        accessor: 'Status',
+        Cell: ({ row }) => {
+          return <div className="table-cell">
+            <Button color="warning" size="small" variant="contained" style={{ pointerEvents: "none" }} disableElevation>DELAYED</Button>
+          </div>
+        }
+      },
     ],
     [],
-  )
+  );
 
   const data = [
-    { OrderDate: '09/02/2022', CustomerName: "Customer Name", Volume: "100kg", ArticleCode: "XXXXXXXXXXXXXX", Price: "1000", StockLevel: "stock_green", },
-  ]
+    {
+      OrderDate: '09/02/2022',
+      CustomerName: "Customer Name",
+      Volume: "100kg",
+      ArticleCode: "XXXXXXXXXXXXXX",
+      Price: "1000",
+      StockLevel: "stock_error",
+      GrowerForecast: "forecast_warning",
+      QuantityConfirmed: "x out of 100",
+      Status: { StatusText: "Delayed", TimeInHours: "18" }
+    },
+  ];
 
+  const DrawerForm = styled('div')(({ theme }) => ({
+    padding: "40px",
+    width: "50vw",
+    display: "flex",
+    flexDirection: "column",
+    height: '100%',
+
+    '& .drawer-form-title': {
+      display: "flex",
+      justifyContent: "space-between"
+    },
+    '& .drawer-form-content': {
+      flex: 1
+    },
+    '& .form-wrapper': {
+      height: "100%"
+    },
+    '& form': {
+      display: "flex",
+      flexDirection: "column",
+      height: '100%'
+    },
+    '& .form-inputs-outer': {
+      display: "flex",
+      flex: 1,
+      alignItems: "flex-start"
+    },
+    '& .form-inputs': {
+      marginTop: 30,
+      display: "flex",
+      flexWrap: "wrap",
+      width: '100%'
+    },
+    '& .form-group': {
+      width: '50%',
+      marginRight: 0,
+      padding: '0 5px',
+      marginTop: 10
+    },
+    '& .form-group .label': {
+      marginBottom: 5,
+    },
+    '& .form-actions button': {
+      fontSize: 18,
+      padding: "12px 42px",
+      fontWeight: 500
+    }
+  }));
 
   return (
     <OrdersContainer className="flex-col">
@@ -148,7 +237,7 @@ export default function Orders() {
 
           <Box className="flex-col" sx={{ marginRight: 1 }}>
             <Typography variant='subtitle2' className='label' >Month</Typography>
-            <StyledSelect
+            <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
               className="text-center"
@@ -158,12 +247,12 @@ export default function Orders() {
               <MenuItem value={"1"}><CalendarIcon /> January 2022</MenuItem>
               <MenuItem value={"2"}><CalendarIcon /> February 2022</MenuItem>
               <MenuItem value={"3"}><CalendarIcon /> March 2022</MenuItem>
-            </StyledSelect>
+            </Select>
           </Box>
 
           <Box className="flex-col">
             <Typography variant='subtitle2' className='label'>Customer</Typography>
-            <StyledSelect
+            <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
               className="text-center"
@@ -173,7 +262,7 @@ export default function Orders() {
               <MenuItem value={"1"}><UserIcon /> All</MenuItem>
               <MenuItem value={"2"}><UserIcon /> Customer 1</MenuItem>
               <MenuItem value={"3"}><UserIcon /> Customer 2</MenuItem>
-            </StyledSelect>
+            </Select>
           </Box>
 
           <Box className="flex-reverse flex1 last-updated">
@@ -181,16 +270,39 @@ export default function Orders() {
           </Box>
 
         </Box>
-
       </Box>
 
       <Box className="flex-center-y" style={{ marginTop: 30 }}>
         <div style={{ fontSize: 16, letterSpacing: 0, marginLeft: 20, marginRight: 5 }} className="bold">Total Orders: 10.889</div>
-        <Button color="warning" size="small" variant="contained" sx={{ margin: 1 }}>12 DELAYED</Button>
-        <Button color="error" size="small" variant="contained">9 CANCELLED</Button>
+        <Button color="warning" size="small" variant="contained" style={{ pointerEvents: "none" }} disableElevation sx={{ margin: 1 }}>12 DELAYED</Button>
+        <Button color="error" size="small" variant="contained" style={{ pointerEvents: "none" }} disableElevation>9 CANCELLED</Button>
       </Box>
 
+      {/* TABLE */}
       <MainTable data={data} columns={columns} />
+
+      {/* FORM */}
+      <Drawer
+        anchor={'right'}
+        open={formOpen}
+        variant="temporary"
+        // onClose={() => toggleDrawer(false)}
+        onClose={(_, reason) =>
+          reason === 'backdropClick' && setFormOpen(false)
+        }
+      >
+        <DrawerForm>
+          <Box className="drawer-form-title">
+            <Typography variant="h5" className="text-primary-color bold">New Order</Typography>
+            <div onClick={() => setFormOpen(false)}>
+              <CloseIcon style={{ fontSize: 32, color: "#B0BEC5", cursor: "pointer" }} />
+            </div>
+          </Box>
+          <Box className="drawer-form-content">
+            <Dform />
+          </Box>
+        </DrawerForm>
+      </Drawer>
 
     </OrdersContainer>
   )

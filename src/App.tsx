@@ -17,12 +17,20 @@ const theme = createTheme({
   //   fontFamily: 'geomanist-regular, Arial',
   // },
   palette: {
+    success: {
+      main: "#A6D800",
+      contrastText: "#fff"
+    },
     error: {
       main: "#FF0064",
       contrastText: "#fff"
     },
     warning: {
       main: "#FBC02D",
+      contrastText: "#fff"
+    },
+    primary: {
+      main: "#3FC2D4",
       contrastText: "#fff"
     },
   }

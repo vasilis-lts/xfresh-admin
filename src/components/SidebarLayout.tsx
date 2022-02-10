@@ -85,14 +85,14 @@ const MainContent = styled('div')(({ theme }) => ({
   },
   '& .notification-counter': {
     position: "absolute",
-    bottom: 4,
-    left: -10,
+    bottom: 3,
+    left: -12,
     fontSize: 10,
     borderRadius: "50%",
     border: "1px solid #FF7024",
-    color: "#FF7024",
-    padding: "0 4px",
-    backgroundColor: "#fff"
+    color: "#fff",
+    padding: "1px 5px 0 5px",
+    backgroundColor: "#FF7024"
   },
   '& .account-container': {
     display: "flex", alignItems: "center", margin: "0 10px 0 20px"
@@ -167,9 +167,7 @@ function TabPanel(props: TabPanelProps) {
       {...other}
     >
       {value === index && (
-        <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
-        </Box>
+        <Box sx={{ p: 3 }}>{children}</Box>
       )}
     </div>
   );
@@ -179,6 +177,7 @@ export default function SidebarLayout() {
   // const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState(0);
+  const [FormOpen, setFormOpen] = React.useState<boolean>(false);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
@@ -193,7 +192,7 @@ export default function SidebarLayout() {
   };
 
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box sx={{ display: 'flex', height: '100%' }}>
       <CssBaseline />
 
       <Drawer variant="permanent" open={open} id="leftDrawer">
@@ -299,7 +298,12 @@ export default function SidebarLayout() {
             </Box>
 
             <Box>
-              <Button variant='contained' size='large' style={{ fontSize: 18 }}><AddIcon /> New order</Button>
+              <Button
+                variant='contained'
+                size='large'
+                style={{ fontSize: 18 }}
+                onClick={() => setFormOpen(true)}
+              ><AddIcon /> New order</Button>
             </Box>
 
           </Box>
@@ -321,7 +325,7 @@ export default function SidebarLayout() {
               </Tabs>
             </Box>
             <TabPanel value={value} index={0}>
-              <Orders />
+              <Orders formOpen={FormOpen} setFormOpen={formOpen => setFormOpen(formOpen)} />
             </TabPanel>
             <TabPanel value={value} index={1}>
               Products (under development)
