@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import { Box, Button, Drawer, MenuItem, Select, Typography } from "@mui/material";
 import { ReactComponent as CalendarIcon } from '../assets/icons/calendar.svg';
@@ -9,9 +9,87 @@ import CloseIcon from '@mui/icons-material/Close';
 import MainTable from "./MainTable";
 import Dform from "./DForm";
 
+interface OrdersFormValues {
+  Customer: string;
+  Price: number;
+  ArticleCode: string;
+  DeliveryDate: Date;
+  ArticleName: string;
+  Volume: number;
+}
+
 export default function Orders({ formOpen, setFormOpen }) {
 
+  const [FormShow, setFormShow] = useState<boolean>(false);
+  const [FormElements, setFormElements] = useState<Record<string, any>[]>([]);
+  const [InitialValues, setInitialValues] = useState<any>({});
 
+  useEffect(() => {
+    if (!FormElements.length) createFormElements();
+  }, [FormElements]);
+
+  function createFormElements() {
+
+    let initialValues: OrdersFormValues = {
+      Customer: "2",
+      Price: 50.00,
+      ArticleCode: "0",
+      DeliveryDate: new Date(),
+      ArticleName: "Based on Article Code value",
+      Volume: 100
+    }
+
+    const formElements = [
+      {
+        label: "Customer",
+        name: "Customer",
+        type: "select",
+        options: [
+          { key: "SelectCustomer", value: "0", label: "Select" },
+          { key: "Customer1", value: "1", label: "Customer 1" },
+          { key: "Customer2", value: "2", label: "Customer 2" },
+        ]
+      },
+      {
+        label: "Order price (customer)",
+        name: "Price",
+        type: "text",
+        unit: '€'
+      },
+      {
+        label: "Article Code",
+        name: "ArticleCode",
+        type: "select",
+        options: [
+          { key: "xxxxxxxxxxxxxx", value: "0", label: "xxxxxxxxxxxxxx" },
+          { key: "yyyyyyyyyyyyyy", value: "1", label: "yyyyyyyyyyyyyy" },
+          { key: "zzzzzzzzzzzzzz", value: "2", label: "zzzzzzzzzzzzzz" },
+        ]
+      },
+      {
+        label: "Delivery Date",
+        name: "DeliveryDate",
+        type: "datepicker",
+      },
+      {
+        label: "Article Name",
+        name: "ArticleName",
+        type: "text",
+        disabled: true
+      },
+      { type: "empty" },
+      {
+        label: "Volume",
+        name: "Volume",
+        type: "text",
+        unit: 'kg'
+      }
+    ];
+
+    setFormElements(formElements);
+    setInitialValues(initialValues);
+    setFormShow(true);
+  }
 
   const OrdersContainer = styled('div')(({ theme }) => ({
 
@@ -230,9 +308,7 @@ export default function Orders({ formOpen, setFormOpen }) {
 
   return (
     <OrdersContainer className="flex-col">
-
       <Box className="flex-center-y jcsb">
-
         <Box className="flex order-select w100">
 
           <Box className="flex-col" sx={{ marginRight: 1 }}>
@@ -299,7 +375,12 @@ export default function Orders({ formOpen, setFormOpen }) {
             </div>
           </Box>
           <Box className="drawer-form-content">
-            <Dform />
+            {FormShow &&
+              <Dform
+                formElements={FormElements}
+                initialValues={InitialValues}
+              />
+            }
           </Box>
         </DrawerForm>
       </Drawer>
