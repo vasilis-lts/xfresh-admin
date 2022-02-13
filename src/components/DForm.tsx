@@ -64,9 +64,7 @@ export default function Dform(props) {
     onSubmit: (values) => {
       alert(JSON.stringify(values, null, 2));
     },
-
   });
-
 
   return (
     <FormContainer className='form-wrapper'>
