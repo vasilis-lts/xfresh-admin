@@ -20,7 +20,7 @@ import { ReactComponent as NotificationIcon } from '../assets/icons/notification
 import { ReactComponent as MessageIcon } from '../assets/icons/message.svg';
 
 import Header from './Header';
-import Sales from '../screens/Sales';
+import Sales from '../screens/Sales/Sales';
 import Grower from '../screens/Grower';
 
 

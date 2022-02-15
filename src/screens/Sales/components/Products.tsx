@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 import styled from "@emotion/styled";
+import Dform from "../../../components/DForm";
 import { Box, Button, Drawer, MenuItem, Select, Typography } from "@mui/material";
-import { ReactComponent as CalendarIcon } from '../assets/icons/calendar.svg';
-import { ReactComponent as UserIcon } from '../assets/icons/user.svg';
-import { ReactComponent as ResetIcon } from '../assets/icons/reset.svg';
+import { ReactComponent as CalendarIcon } from '../../../assets/icons/calendar.svg';
+import { ReactComponent as UserIcon } from '../../../assets/icons/user.svg';
+import { ReactComponent as ResetIcon } from '../../../assets/icons/reset.svg';
 import CloseIcon from '@mui/icons-material/Close';
-
-import Dform from "./DForm";
 
 interface ProductsFormValues {
   ProductName: string;

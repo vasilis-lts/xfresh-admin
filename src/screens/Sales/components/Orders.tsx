@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import { Box, Button, Drawer, MenuItem, Select, Typography } from "@mui/material";
-import { ReactComponent as CalendarIcon } from '../assets/icons/calendar.svg';
-import { ReactComponent as UserIcon } from '../assets/icons/user.svg';
-import { ReactComponent as ResetIcon } from '../assets/icons/reset.svg';
+import { ReactComponent as CalendarIcon } from '../../../assets/icons/calendar.svg';
+import { ReactComponent as UserIcon } from '../../../assets/icons/user.svg';
+import { ReactComponent as ResetIcon } from '../../../assets/icons/reset.svg';
 import CloseIcon from '@mui/icons-material/Close';
 
-import MainTable from "./MainTable";
-import Dform from "./DForm";
+import MainTable from "../../../components/MainTable";
+import Dform from "../../../components/DForm";
 
 interface OrdersFormValues {
   CustomerId: string;

@@ -1,9 +1,9 @@
 import { Box, Button, Tab, Tabs, Typography } from "@mui/material";
-import Orders from "../components/Orders";
-import { ReactComponent as SettingsIcon } from '../assets/icons/settings.svg';
+import Orders from "./components/Orders";
+import { ReactComponent as SettingsIcon } from '../../assets/icons/settings.svg';
 import AddIcon from '@mui/icons-material/Add';
 import React from "react";
-import Products from "../components/Products";
+import Products from "./components/Products";
 
 function a11yProps(index: number) {
   return {
