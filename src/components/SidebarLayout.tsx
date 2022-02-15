@@ -21,9 +21,8 @@ import { ReactComponent as MessageIcon } from '../assets/icons/message.svg';
 
 import Header from './Header';
 import Sales from '../screens/Sales/Sales';
-import Grower from '../screens/Grower';
-
-
+import GrowerOverview from '../screens/GrowerOverview/GrowerOverview';
+import Grower from '../screens/GrowerOverview/Grower/Grower';
 
 const drawerWidth = 196;
 
@@ -232,7 +231,8 @@ export default function SidebarLayout() {
         <Routes>
           <Route path="/" element={<Sales />} />
           <Route path="sales" element={<Sales />} />
-          <Route path="grower" element={<Grower />} />
+          <Route path="grower" element={<GrowerOverview />} />
+          <Route path="grower/:growerslug" element={<Grower />} />
         </Routes>
 
       </MainContent>

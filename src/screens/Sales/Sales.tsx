@@ -100,7 +100,6 @@ export default function Sales() {
         <TabPanel value={value} index={1}>
           {value === 1 && <Products formOpen={ProductsFormOpen} setFormOpen={formOpen => setProductsFormOpen(formOpen)} />}
         </TabPanel>
-
       </Box>
 
     </Box>

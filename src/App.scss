@@ -41,27 +41,32 @@ h5{font-size: 24px;}
 .flex-reverse{display: flex;flex-direction: row-reverse;}
 .flex1{flex: 1;}
 
-
 .jcsb{justify-content: space-between;}
 
-.text-primary-color{color:#37474F}
-
 .w100{width: 100%;}
+
+// colors
+.text-primary-color{color:#37474F;}
+.text-lightblue{color:$lightBlue;}
+.text-error{color:$error_color;}
 
  ////////////////////////// 
  // COMPONENTS / overrides
  /////////////////////////
 
- #leftDrawer{
-   
+ #leftDrawer{   
    .MuiPaper-root{
      background-color: $teal_dark;
     }
     svg, span{
       color: white;
-    }
-   
+    }  
  }
+
+ .form-file-input .MuiButton-root{
+    padding: 13.7px 14px;
+    font-size: 16px;
+  }
 
  button.MuiTab-root{
    text-transform: none!important;

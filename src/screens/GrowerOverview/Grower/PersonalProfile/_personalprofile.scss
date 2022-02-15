@@ -1,0 +1,31 @@
+#personalProfileForm{
+
+  form {
+    display: flex;
+    flex-direction: column;
+    height: 100%
+  }
+  .form-inputs-outer {
+    display: flex;
+    flex: 1;
+    align-items: flex-start
+  }
+  .form-inputs {
+    margin-top: 20px;
+    display: flex;
+    width: 100%
+  }
+  .form-column {
+    width: 33%;
+    max-width: 33%;
+    margin-right: 0;
+  }
+  .form-group {
+    padding: 0 5px;
+    margin-top: 10px;
+  }
+  .form-actions {
+    display: none;
+  }
+  
+}

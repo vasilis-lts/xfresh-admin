@@ -3,7 +3,7 @@
   height: "100%";
 
   .form-group {
-    position: relative
+    position: relative;
   }
   .form-group-unit {
     position: absolute;
@@ -27,8 +27,5 @@
     resize: vertical; max-height: 200px;
     font-size: 16px;
   }
-  .form-file-input .MuiButton-root{
-    padding: 13.7px 14px;
-    font-size: 16px;
-  }
+  
 }
