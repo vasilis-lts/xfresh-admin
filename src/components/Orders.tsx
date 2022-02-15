@@ -10,7 +10,7 @@ import MainTable from "./MainTable";
 import Dform from "./DForm";
 
 interface OrdersFormValues {
-  Customer: string;
+  CustomerId: string;
   Price: number;
   ArticleCode: string;
   DeliveryDate: Date;
@@ -31,7 +31,7 @@ export default function Orders({ formOpen, setFormOpen }) {
   function createFormElements() {
 
     let initialValues: OrdersFormValues = {
-      Customer: "2",
+      CustomerId: "2",
       Price: 50.00,
       ArticleCode: "0",
       DeliveryDate: new Date(),
@@ -41,9 +41,10 @@ export default function Orders({ formOpen, setFormOpen }) {
 
     const formElements = [
       {
-        label: "Customer",
-        name: "Customer",
+        label: "Customer Id",
+        name: "CustomerId",
         type: "select",
+        required: true,
         options: [
           { key: "SelectCustomer", value: "0", label: "Select" },
           { key: "Customer1", value: "1", label: "Customer 1" },
@@ -51,14 +52,18 @@ export default function Orders({ formOpen, setFormOpen }) {
         ]
       },
       {
-        label: "Order price (customer)",
+        label: "Price per box",
         name: "Price",
         type: "text",
+        required: true,
         unit: '€'
       },
+      // { type: "empty", name: "empty1" },
+
       {
-        label: "Article Code",
-        name: "ArticleCode",
+        label: "Article Code Input",
+        name: "ArticleCodeInput",
+        required: true,
         type: "select",
         options: [
           { key: "xxxxxxxxxxxxxx", value: "0", label: "xxxxxxxxxxxxxx" },
@@ -67,23 +72,31 @@ export default function Orders({ formOpen, setFormOpen }) {
         ]
       },
       {
-        label: "Delivery Date",
-        name: "DeliveryDate",
-        type: "datepicker",
+        label: "Article Code Output",
+        name: "ArticleCodeOutput",
+        required: true,
+        type: "select",
+        options: [
+          { key: "xxxxxxxxxxxxxx", value: "0", label: "xxxxxxxxxxxxxx" },
+          { key: "yyyyyyyyyyyyyy", value: "1", label: "yyyyyyyyyyyyyy" },
+          { key: "zzzzzzzzzzzzzz", value: "2", label: "zzzzzzzzzzzzzz" },
+        ]
       },
-      {
-        label: "Article Name",
-        name: "ArticleName",
-        type: "text",
-        disabled: true
-      },
-      { type: "empty" },
       {
         label: "Volume",
         name: "Volume",
         type: "text",
+        required: true,
         unit: 'kg'
-      }
+      },
+      {
+        label: "Delivery Date",
+        name: "DeliveryDate",
+        type: "datepicker",
+        required: true,
+      },
+
+
     ];
 
     setFormElements(formElements);
@@ -292,6 +305,7 @@ export default function Orders({ formOpen, setFormOpen }) {
     },
     '& .form-group': {
       width: '50%',
+      maxWidth: '50%',
       marginRight: 0,
       padding: '0 5px',
       marginTop: 10

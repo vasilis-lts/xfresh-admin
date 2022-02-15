@@ -3,6 +3,7 @@ import Orders from "../components/Orders";
 import { ReactComponent as SettingsIcon } from '../assets/icons/settings.svg';
 import AddIcon from '@mui/icons-material/Add';
 import React from "react";
+import Products from "../components/Products";
 
 function a11yProps(index: number) {
   return {
@@ -37,7 +38,8 @@ function TabPanel(props: TabPanelProps) {
 
 export default function Sales() {
   const [value, setValue] = React.useState(0);
-  const [FormOpen, setFormOpen] = React.useState<boolean>(false);
+  const [OrdersFormOpen, setOrdersFormOpen] = React.useState<boolean>(false);
+  const [ProductsFormOpen, setProductsFormOpen] = React.useState<boolean>(false);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
@@ -53,14 +55,25 @@ export default function Sales() {
           <SettingsIcon style={{ marginLeft: 10, marginTop: 3, color: "#37474F" }} />
         </Box>
 
-        <Box>
-          <Button
-            variant='contained'
-            size='large'
-            style={{ fontSize: 18 }}
-            onClick={() => setFormOpen(true)}
-          ><AddIcon /> New order</Button>
-        </Box>
+        {value === 0 &&
+          <Box>
+            <Button
+              variant='contained'
+              size='large'
+              style={{ fontSize: 18 }}
+              onClick={() => setOrdersFormOpen(true)}
+            ><AddIcon /> New order</Button>
+          </Box>}
+
+        {value === 1 &&
+          <Box>
+            <Button
+              variant='contained'
+              size='large'
+              style={{ fontSize: 18 }}
+              onClick={() => setProductsFormOpen(true)}
+            ><AddIcon /> New product</Button>
+          </Box>}
 
       </Box>
 
@@ -81,10 +94,11 @@ export default function Sales() {
           </Tabs>
         </Box>
         <TabPanel value={value} index={0}>
-          <Orders formOpen={FormOpen} setFormOpen={formOpen => setFormOpen(formOpen)} />
+
+          {value === 0 && <Orders formOpen={OrdersFormOpen} setFormOpen={formOpen => setOrdersFormOpen(formOpen)} />}
         </TabPanel>
         <TabPanel value={value} index={1}>
-          Products (under development)
+          {value === 1 && <Products formOpen={ProductsFormOpen} setFormOpen={formOpen => setProductsFormOpen(formOpen)} />}
         </TabPanel>
 
       </Box>
