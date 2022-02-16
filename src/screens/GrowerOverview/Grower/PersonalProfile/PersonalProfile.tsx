@@ -1,8 +1,10 @@
 import { Box, Button, TextField } from "@mui/material";
 import { useEffect } from "react";
 import * as Yup from 'yup';
-import { Field, FieldArray, Form, Formik, useFormik } from 'formik';
+import { FieldArray, Form, Formik } from 'formik';
 import { ReactComponent as UploadIcon } from '../../../../assets/icons/upload.svg';
+import { ReactComponent as AddInputIcon } from '../../../../assets/icons/add.svg';
+import { ReactComponent as RemoveInputIcon } from '../../../../assets/icons/minus.svg';
 import "./_personalprofile.scss";
 import Thumb from "../../../../components/Thumb";
 
@@ -25,7 +27,7 @@ export default function PersonalProfile() {
             city: "",
             country: "",
             totalAreaInCultivation: "",
-            mailinglist: ["test", "test3", "test4"],
+            mailinglist: [""],
             incoterms: "",
             currency: "",
             logo: ""
@@ -41,15 +43,15 @@ export default function PersonalProfile() {
               logo: Yup.mixed().required(),
               incoterms: Yup.string().required(),
               currency: Yup.string().required(),
+              mailinglist: Yup.array()
+                .of(
+                  Yup.string()
+                    .email("Invalid email")
+                    .required("Please enter email"))
             })
           }
           onSubmit={values => console.log(values)}
-          // validationSchema = validationSchema
-          // onSubmit={values =>
-          //   setTimeout(() => {
-          //     alert(JSON.stringify(values, null, 2));
-          //   }, 500)
-          // }
+
           render={({ values, errors, touched, handleChange, setFieldValue }) => (
             <Form>
 
@@ -59,7 +61,7 @@ export default function PersonalProfile() {
 
                   <Box className="flex-col form-column">
                     <Box className="flex-col form-group">
-                      <label htmlFor={"fullname"} className='label' >Full Name*</label>
+                      <label htmlFor={"fullname"} className='label' >Full name*</label>
                       <TextField
                         fullWidth
                         id={"fullname"}
@@ -72,7 +74,7 @@ export default function PersonalProfile() {
                       />
                     </Box>
                     <Box className="flex-col form-group">
-                      <label htmlFor={"tradename"} className='label' >Trade Name*</label>
+                      <label htmlFor={"tradename"} className='label' >Trade name*</label>
                       <TextField
                         fullWidth
                         id={"tradename"}
@@ -85,38 +87,67 @@ export default function PersonalProfile() {
                       />
                     </Box>
 
-                    <FieldArray
-                      name="mailinglist"
-                      render={arrayHelpers => (
-                        <div>
-                          {values.mailinglist && values.mailinglist.length > 0 ? (
-                            values.mailinglist.map((friend, index) => (
-                              <div key={index}>
-                                <Field name={`mailinglist.${index}`} />
-                                <button
-                                  type="button"
-                                  onClick={() => arrayHelpers.remove(index)} // remove a friend from the list
-                                >
-                                  -
-                                </button>
-                                <button
-                                  type="button"
-                                  onClick={() => arrayHelpers.insert(index, '')} // insert an empty string at a position
-                                >
-                                  +
-                                </button>
-                              </div>
-                            ))
-                          ) : (
-                            <button type="button" onClick={() => arrayHelpers.push('')}>
-                              {/* show this when user has removed all friends from the list */}
-                              Add a friend
-                            </button>
-                          )}
+                    <Box key={'mailinglist'} className="flex-col form-group">
+                      <label htmlFor={'mailinglist'} className='label' style={{ marginBottom: 0 }} >Mailing lists</label>
+                      <FieldArray
+                        name="mailinglist"
+                        render={arrayHelpers => (
+                          <div>
+                            {values.mailinglist && values.mailinglist.length > 0 ? (
+                              values.mailinglist.map((item, index) => (
+                                // <div key={index}>
+                                //   <Field name={`mailinglist.${index}`} />
+                                //   <button
+                                //     type="button"
+                                //     onClick={() => arrayHelpers.remove(index)} // remove a friend from the list
+                                //   >
+                                //     -
+                                //   </button>
+                                //   <button
+                                //     type="button"
+                                //     onClick={() => arrayHelpers.insert(index, '')} // insert an empty string at a position
+                                //   >
+                                //     +
+                                //   </button>
+                                // </div>
 
-                        </div>
-                      )}
-                    />
+                                <Box key={'mailinglist' + index} className="flex-col form-group">
+
+                                  <div className="flex">
+                                    <TextField
+                                      fullWidth
+                                      id={'mailinglist' + index}
+                                      name={'mailinglist' + index}
+                                      type={"text"}
+                                      value={values.mailinglist[index]}
+                                      onChange={handleChange}
+                                      error={touched['mailinglist' + index] && Boolean(errors['mailinglist' + index])}
+                                      helperText={touched['mailinglist' + index] && errors['mailinglist' + index]}
+                                    />
+                                    <div className="add-input-button field-array-control" onClick={() => arrayHelpers.insert(index, '')}><AddInputIcon style={{ color: "#3FC2D4" }} /></div>
+                                    {values.mailinglist.length > 1 &&
+                                      <div
+                                        className="remove-input-button field-array-control"
+                                        onClick={() => arrayHelpers.remove(index)}>
+                                        <RemoveInputIcon style={{ color: "#FF0064" }} />
+                                      </div>
+                                    }
+                                  </div>
+                                </Box>
+                              ))
+                            ) : (
+                              <Button type="button" color={'primary'} onClick={() => arrayHelpers.push('')}>
+                                {/* show this when user has removed all friends from the list */}
+                                Add an e-mail
+                              </Button>
+                            )}
+
+                          </div>
+                        )}
+                      />
+                    </Box>
+
+
                   </Box>
 
                   <Box className="flex-col form-column">
@@ -134,7 +165,7 @@ export default function PersonalProfile() {
                       />
                     </Box>
                     <Box className="flex-col form-group">
-                      <label htmlFor={"housenumber"} className='label' >House Number</label>
+                      <label htmlFor={"housenumber"} className='label' >House number</label>
                       <TextField
                         fullWidth
                         id={"housenumber"}
@@ -233,13 +264,15 @@ export default function PersonalProfile() {
 
                     <Box className="flex-col form-group form-file-input">
                       <label htmlFor={"logo"} className='label' >Logo*</label>
-                      <input id="logo" name="logo" type="file"
-                        accept="image/*"
-                        onChange={(event) => {
-                          if (event?.currentTarget?.files?.length) {
-                            setFieldValue("logo", event.currentTarget.files[0] ? event.currentTarget.files[0] : "");
-                          }
-                        }} className="form-control" />
+                      <Button variant="contained" component="label"> Upload File
+                        <input id="logo" name="logo" type="file" hidden
+                          accept="image/*"
+                          onChange={(event) => {
+                            if (event?.currentTarget?.files?.length) {
+                              setFieldValue("logo", event.currentTarget.files[0] ? event.currentTarget.files[0] : "");
+                            }
+                          }} className="form-control" />
+                      </Button>
                       <Thumb file={values.logo} />
                       {errors.logo && touched["logo"] ? <p className="text-error">Logo is required</p> : ""}
                     </Box>

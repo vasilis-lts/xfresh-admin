@@ -30,7 +30,7 @@ html,body {
 
 h5{font-size: 24px;}
 
-.bold{font-weight: bold;}
+.bold{font-weight: 700!important;}
 
 .flex{display: flex;}
 .flex-center-x{display: flex;justify-content: center;}
@@ -53,6 +53,14 @@ h5{font-size: 24px;}
  ////////////////////////// 
  // COMPONENTS / overrides
  /////////////////////////
+
+ .field-array-control{
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   padding: 0 10px;
+   cursor: pointer;
+ }
 
  #leftDrawer{   
    .MuiPaper-root{

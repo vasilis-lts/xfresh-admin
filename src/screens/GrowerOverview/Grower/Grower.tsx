@@ -4,6 +4,7 @@ import { ReactComponent as UploadIcon } from '../../../assets/icons/upload.svg';
 import React from "react";
 import { useParams } from "react-router-dom";
 import PersonalProfile from "./PersonalProfile/PersonalProfile";
+import Transport from "./Transport/Transport";
 
 function a11yProps(index: number) {
   return {
@@ -39,8 +40,6 @@ function TabPanel(props: TabPanelProps) {
 export default function Grower() {
   let { growerslug } = useParams();
   const [value, setValue] = React.useState(0);
-  // const [OrdersFormOpen, setOrdersFormOpen] = React.useState<boolean>(false);
-  // const [ProductsFormOpen, setProductsFormOpen] = React.useState<boolean>(false);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
@@ -64,7 +63,20 @@ export default function Grower() {
             style={{ fontSize: 18 }}
             disableElevation
             onClick={() => {
-              const formButton = document.getElementById("ppFormButton");
+              let id = '';
+
+              switch (value) {
+                case 0:
+                  id = 'ppFormButton';
+                  break;
+                case 1:
+                  id = 'trFormButton';
+                  break;
+                default:
+                  break;
+              }
+
+              const formButton = document.getElementById(id);
               formButton?.click();
             }}
           ><UploadIcon style={{ color: "white", marginRight: 3, fontSize: 18 }} /> Save</Button>
@@ -99,7 +111,7 @@ export default function Grower() {
         </TabPanel>
         <TabPanel value={value} index={1}>
           {value === 1 &&
-            <p>Transport</p>
+            <Transport />
             // <Products formOpen={ProductsFormOpen} setFormOpen={formOpen => setProductsFormOpen(formOpen)} />
           }
         </TabPanel>
@@ -126,7 +138,6 @@ export default function Grower() {
         </TabPanel>
 
       </Box>
-
     </Box>
   )
 }
