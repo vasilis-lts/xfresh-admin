@@ -3,8 +3,8 @@ import { ReactComponent as ChevronIcon } from '../../../assets/icons/chevron.svg
 import { ReactComponent as UploadIcon } from '../../../assets/icons/upload.svg';
 import React from "react";
 import { useParams } from "react-router-dom";
-import PersonalProfile from "./PersonalProfile/PersonalProfile";
-import Transport from "./Transport/Transport";
+import PersonalProfile from "./components/PersonalProfile/PersonalProfile";
+import Transport from "./components/Transport/Transport";
 
 function a11yProps(index: number) {
   return {

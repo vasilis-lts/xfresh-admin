@@ -2,11 +2,11 @@ import { Box, Button, TextField } from "@mui/material";
 import { useEffect } from "react";
 import * as Yup from 'yup';
 import { FieldArray, Form, Formik } from 'formik';
-import { ReactComponent as UploadIcon } from '../../../../assets/icons/upload.svg';
-import { ReactComponent as AddInputIcon } from '../../../../assets/icons/add.svg';
-import { ReactComponent as RemoveInputIcon } from '../../../../assets/icons/minus.svg';
+import { ReactComponent as UploadIcon } from '../../../../../assets/icons/upload.svg';
+import { ReactComponent as AddInputIcon } from '../../../../../assets/icons/add.svg';
+import { ReactComponent as RemoveInputIcon } from '../../../../../assets/icons/minus.svg';
 import "./_personalprofile.scss";
-import Thumb from "../../../../components/Thumb";
+import Thumb from "../../../../../components/Thumb";
 
 export default function PersonalProfile() {
 
@@ -27,7 +27,7 @@ export default function PersonalProfile() {
             city: "",
             country: "",
             totalAreaInCultivation: "",
-            mailinglist: [""],
+            mailinglist: ["test"],
             incoterms: "",
             currency: "",
             logo: ""
@@ -43,11 +43,7 @@ export default function PersonalProfile() {
               logo: Yup.mixed().required(),
               incoterms: Yup.string().required(),
               currency: Yup.string().required(),
-              mailinglist: Yup.array()
-                .of(
-                  Yup.string()
-                    .email("Invalid email")
-                    .required("Please enter email"))
+              mailinglist: Yup.array().min(1).of(Yup.string().email(({ value }) => `${value} is not a valid email`)),
             })
           }
           onSubmit={values => console.log(values)}
@@ -56,7 +52,6 @@ export default function PersonalProfile() {
             <Form>
 
               <div className="form-inputs-outer">
-
                 <div className="form-inputs">
 
                   <Box className="flex-col form-column">
@@ -89,40 +84,21 @@ export default function PersonalProfile() {
 
                     <Box key={'mailinglist'} className="flex-col form-group">
                       <label htmlFor={'mailinglist'} className='label' style={{ marginBottom: 0 }} >Mailing lists</label>
+                      {errors.mailinglist ? <p className="text-error">At least one valid e-mail address is needed</p> : ""}
                       <FieldArray
                         name="mailinglist"
                         render={arrayHelpers => (
                           <div>
                             {values.mailinglist && values.mailinglist.length > 0 ? (
                               values.mailinglist.map((item, index) => (
-                                // <div key={index}>
-                                //   <Field name={`mailinglist.${index}`} />
-                                //   <button
-                                //     type="button"
-                                //     onClick={() => arrayHelpers.remove(index)} // remove a friend from the list
-                                //   >
-                                //     -
-                                //   </button>
-                                //   <button
-                                //     type="button"
-                                //     onClick={() => arrayHelpers.insert(index, '')} // insert an empty string at a position
-                                //   >
-                                //     +
-                                //   </button>
-                                // </div>
 
                                 <Box key={'mailinglist' + index} className="flex-col form-group">
-
                                   <div className="flex">
                                     <TextField
                                       fullWidth
                                       id={'mailinglist' + index}
-                                      name={'mailinglist' + index}
+                                      name={`mailinglist.${index}`}
                                       type={"text"}
-                                      value={values.mailinglist[index]}
-                                      onChange={handleChange}
-                                      error={touched['mailinglist' + index] && Boolean(errors['mailinglist' + index])}
-                                      helperText={touched['mailinglist' + index] && errors['mailinglist' + index]}
                                     />
                                     <div className="add-input-button field-array-control" onClick={() => arrayHelpers.insert(index, '')}><AddInputIcon style={{ color: "#3FC2D4" }} /></div>
                                     {values.mailinglist.length > 1 &&

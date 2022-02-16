@@ -2,7 +2,7 @@ import { Box, Button, Checkbox, FormControlLabel, FormGroup } from "@mui/materia
 import { useEffect } from "react";
 import * as Yup from 'yup';
 import { Form, Formik } from 'formik';
-import { ReactComponent as UploadIcon } from '../../../../assets/icons/upload.svg';
+import { ReactComponent as UploadIcon } from '../../../../../assets/icons/upload.svg';
 import "../PersonalProfile/_personalprofile.scss"
 
 export default function Transport() {
