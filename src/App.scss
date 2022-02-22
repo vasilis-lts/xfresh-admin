@@ -55,6 +55,8 @@ h5{font-size: 24px;}
  /////////////////////////
 
  .main-content{padding: 20px;}
+ .normalTabs{display: block;}
+ .mobileTabs{display: none;}
 
  .field-array-control{
    display: flex;
@@ -143,6 +145,11 @@ h5{font-size: 24px;}
  #mainContentHeader{display: none;}
  #leftDrawer{display: none;}
  #mainContentBody{margin-top: 65px!important;}
+ .normalTabs{display: none;}
+ .mobileTabs{
+    display: block;
+    margin-top: 10px;
+  }
  #topDrawer{
    display: flex;
    

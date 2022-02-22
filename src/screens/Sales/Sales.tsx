@@ -26,7 +26,7 @@ const Accordion = styled((props: AccordionProps) => (
 
 const AccordionSummary = styled((props: AccordionSummaryProps) => (
   <MuiAccordionSummary
-    expandIcon={<ArrowIcon style={{ rotate: '-90deg', fontSize: '0.9rem' }} />}
+    expandIcon={<ArrowIcon style={{ transform: 'rotate(-90deg)', fontSize: '0.9rem' }} />}
     {...props}
   />
 ))(({ theme }) => ({
@@ -125,48 +125,46 @@ export default function Sales() {
 
       </Box>
 
-      <div className="normalTabs"></div>
-      <Box sx={{ width: '100%', marginTop: 5 }}>
-        <Box>
-          <Tabs
-            value={value}
-            onChange={handleChange}
-            aria-label="basic tabs"
-            TabIndicatorProps={{
-              style: {
-                backgroundColor: "#3FC2D4"
-              }
-            }}
-          >
-            <Tab label="Orders" {...a11yProps(0)} />
-            <Tab label="Products" {...a11yProps(1)} />
-          </Tabs>
+      <div className="normalTabs">
+        <Box sx={{ width: '100%', marginTop: 5 }}>
+          <Box>
+            <Tabs
+              value={value}
+              onChange={handleChange}
+              aria-label="basic tabs"
+              TabIndicatorProps={{
+                style: {
+                  backgroundColor: "#3FC2D4"
+                }
+              }}
+            >
+              <Tab label="Orders" {...a11yProps(0)} />
+              <Tab label="Products" {...a11yProps(1)} />
+            </Tabs>
+          </Box>
+          <TabPanel value={value} index={0}>
+            {value === 0 && <Orders formOpen={OrdersFormOpen} setFormOpen={formOpen => setOrdersFormOpen(formOpen)} />}
+          </TabPanel>
+          <TabPanel value={value} index={1}>
+            {value === 1 && <Products formOpen={ProductsFormOpen} setFormOpen={formOpen => setProductsFormOpen(formOpen)} />}
+          </TabPanel>
         </Box>
-        <TabPanel value={value} index={0}>
-          {value === 0 && <Orders formOpen={OrdersFormOpen} setFormOpen={formOpen => setOrdersFormOpen(formOpen)} />}
-        </TabPanel>
-        <TabPanel value={value} index={1}>
-          {value === 1 && <Products formOpen={ProductsFormOpen} setFormOpen={formOpen => setProductsFormOpen(formOpen)} />}
-        </TabPanel>
-      </Box>
+      </div>
 
       <div className="mobileTabs">
         <Accordion expanded={expanded === 'panel1'} onChange={handleChangeTabs('panel1')}>
           <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
-            <Typography>Collapsible Group Item #1</Typography>
+            <Typography>Orders</Typography>
           </AccordionSummary>
           <AccordionDetails>
             <Typography>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-              malesuada lacus ex, sit amet blandit leo lobortis eget. Lorem ipsum dolor
-              sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
-              sit amet blandit leo lobortis eget.
+              {expanded === 'panel1' && <Orders formOpen={OrdersFormOpen} setFormOpen={formOpen => setOrdersFormOpen(formOpen)} />}
             </Typography>
           </AccordionDetails>
         </Accordion>
         <Accordion expanded={expanded === 'panel2'} onChange={handleChangeTabs('panel2')}>
           <AccordionSummary aria-controls="panel2d-content" id="panel2d-header">
-            <Typography>Collapsible Group Item #2</Typography>
+            <Typography>Products</Typography>
           </AccordionSummary>
           <AccordionDetails>
             <Typography>
@@ -179,7 +177,7 @@ export default function Sales() {
         </Accordion>
         <Accordion expanded={expanded === 'panel3'} onChange={handleChangeTabs('panel3')}>
           <AccordionSummary aria-controls="panel3d-content" id="panel3d-header">
-            <Typography>Collapsible Group Item #3</Typography>
+            <Typography>Customers</Typography>
           </AccordionSummary>
           <AccordionDetails>
             <Typography>
