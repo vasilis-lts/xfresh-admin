@@ -48,6 +48,29 @@ const closedMixin = (theme: Theme): CSSObject => ({
   // },
 });
 
+const openedMixinTop = (theme: Theme): CSSObject => ({
+  height: 300,
+  transition: theme.transitions.create('width', {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.enteringScreen,
+  }),
+  overflowY: 'hidden',
+});
+
+const closedMixinTop = (theme: Theme): CSSObject => ({
+  transition: theme.transitions.create('width', {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen,
+  }),
+  overflowY: 'hidden',
+  height: 65,
+  // width: `calc(${theme.spacing(7)} + 1px)`,
+  // [theme.breakpoints.up('sm')]: {
+  //   width: `calc(${theme.spacing(9)} + 1px)`,
+  // },
+});
+
+
 const DrawerHeader = styled('div')(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
@@ -66,7 +89,6 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 const MainContent = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: "column",
-  padding: 20,
   width: "100%",
   paddingTop: 25,
 
@@ -119,6 +141,44 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
     ...(!open && {
       ...closedMixin(theme),
       '& .MuiDrawer-paper': closedMixin(theme),
+      '& #drawerList span': {
+        display: "none"
+      }
+    }),
+    '& svg': {
+      fill: 'white'
+    },
+    '& #drawerList svg': {
+      marginLeft: 8
+    },
+    '& #drawerList span': {
+      fontSize: 18
+    },
+    '& .MuiListItemIcon-root': {
+      minWidth: "47.5px"
+    }
+  }),
+);
+
+const TopDrawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
+  ({ theme, open }) => ({
+    width: drawerWidth,
+    flexShrink: 0,
+    whiteSpace: 'nowrap',
+    boxSizing: 'border-box',
+    // width: "100%",
+    // height: 55,
+
+    ...(open && {
+      ...openedMixinTop(theme),
+      '& .MuiDrawer-paper': openedMixinTop(theme),
+      '& #drawerList span': {
+        display: "initial"
+      }
+    }),
+    ...(!open && {
+      ...closedMixinTop(theme),
+      '& .MuiDrawer-paper': closedMixinTop(theme),
       '& #drawerList span': {
         display: "none"
       }
@@ -224,7 +284,43 @@ export default function SidebarLayout() {
         </List>
 
       </Drawer>
-      <MainContent>
+
+
+      <TopDrawer variant="permanent" anchor='top' open={open} id="topDrawer">
+        <DrawerHeader id="drawerHeader">
+
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            onClick={() => { open ? handleDrawerClose() : handleDrawerOpen() }}
+            edge="start"
+          // sx={{
+          //   marginRight: '36px',
+          //   ...(open && { display: 'none' }),
+          // }}
+          >
+            <LogoIcon />
+          </IconButton>
+
+        </DrawerHeader>
+        <List id="drawerList">
+
+          <Link to="/sales">
+            <ListItem button>
+              <ListItemIcon>
+                <LineChartIcon />
+              </ListItemIcon>
+              <ListItemText primary={"Sales"} />
+            </ListItem>
+          </Link>
+
+        </List>
+
+      </TopDrawer>
+
+
+
+      <MainContent className='main-content'>
 
         <Header />
 
